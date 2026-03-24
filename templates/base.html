@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>School System</title>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'home' %}">Home</a> |
+        <a href="{% url 'students' %}">Student</a> |
+        <a href="{% url 'contact' %}">Contact Us</a>
+    </nav>
+
+    <hr>
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
