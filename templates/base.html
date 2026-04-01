@@ -1,18 +1,66 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>School System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Education System{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
 </head>
 <body>
-    <nav>
-        <a href="{% url 'home' %}">Home</a> |
-        <a href="{% url 'students' %}">Student</a> |
-        <a href="{% url 'contact' %}">Contact Us</a>
+
+    <nav class="navbar">
+        <div class="logo">
+            <a href="{% url 'home' %}">Education System</a>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'students' %}">Students</a></li>
+            <li><a href="{% url 'subjects' %}">Subjects</a></li>
+            <li><a href="{% url 'grades' %}">Grades</a></li>
+            <li><a href="{% url 'leaderboard' %}">Leaderboard</a></li>
+            <li><a href="{% url 'profile' %}">User Profile</a></li>
+            {% if user.is_authenticated %}
+            <li>
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+            </li>
+            {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+            {% endif %}
+        
+
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
     </nav>
 
-    <hr>
+    {% if request.path == '/' %}
+    <section class="hero">
+        <img src="{% static 'images/iti-building.jpg' %}" alt="ITI Building">
+    </section>
 
-    {% block content %}
-    {% endblock %}
+    <div class="container">
+        <div class="welcome-box">
+            <h1>Welcome to ITI</h1>
+            <p>School Management System built using Django.</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="container">
+        <div class="content-card">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>Education System Project - Django ITI Lab</p>
+    </footer>
+
 </body>
 </html>

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block title %}
+Subjects
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>Subjects Page</h1>
+    <p>Manage subjects information.</p>
+</div>
+
+<div class="section-layout">
+
+    <div class="form-card">
+        <h2>Add / Edit Subject</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button type="submit" class="main-btn">Save Subject</button>
+        </form>
+    </div>
+
+    <div class="list-card">
+        <h2>All Subjects</h2>
+
+        {% if subjects %}
+            <div class="card-grid">
+                {% for subject in subjects %}
+                    <div class="item-card">
+                        <div class="item-content">
+                            <h3>{{ subject.title }}</h3>
+                            <p><strong>Code:</strong> {{ subject.code }}</p>
+                            <p><strong>Description:</strong> {{ subject.description }}</p>
+                        </div>
+
+                        <div class="item-actions">
+                            <a href="{% url 'edit_subject' subject.slug %}" class="edit-btn">Edit</a>
+                            <a href="{% url 'delete_subject' subject.slug %}" class="delete-btn">Delete</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No subjects found.</p>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Leaderboard
+{% endblock %}
+
+{% block content %}
+
+<div class="leaderboard-wrapper">
+    <h1 class="leaderboard-title">Top 5 Students</h1>
+    <p class="leaderboard-subtitle">Best students based on total grades.</p>
+
+    <div class="leaderboard-list">
+        {% for item in leaderboard %}
+            <div class="leaderboard-item {% if forloop.first %}top-rank{% endif %}">
+                <div class="leaderboard-left">
+                    <h3>
+                        {{ item.student_name }}
+                        {% if forloop.first %}
+                            <span class="star-badge">★</span>
+                        {% endif %}
+                    </h3>
+
+                    <p>
+                        <strong>Subjects:</strong>
+                        {% for subject in item.subjects %}
+                            {{ subject }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+
+                <div class="leaderboard-right">
+                    <div class="total-score">{{ item.total }}</div>
+                    <div class="rank-badge">Rank #{{ forloop.counter }}</div>
+                </div>
+            </div>
+        {% empty %}
+            <p>No leaderboard data found.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
